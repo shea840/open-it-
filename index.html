@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            background-image: url('your-pastel-pink-heart-design-url-here');
+            background-size: cover;
+            padding: 50px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background: #ff4d6d;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff1e4d;
+        }
+
+        .popup {
+            background: pink;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .envelope-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .envelope {
+            cursor: pointer;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-container" id="start-page">
+        <h2>Click the envelope to see the message!</h2>
+        <img src="your-envelope-image-url-here" alt="Envelope" class="envelope" onclick="startQuiz()">
+    </div>
+
+    <div class="quiz-container hidden" id="quiz">
+        <h2 id="question">Do you love me?</h2>
+        <div id="answers">
+            <button onclick="nextQuestion('yes')">Yes</button>
+            <button onclick="showPopup('Shut up and say yes')">No</button>
+        </div>
+    </div>
+
+    <div id="popup" class="popup">
+        <span id="popup-message"></span>
+        <br>
+        <button onclick="hidePopup()">OK</button>
+    </div>
+
+    <script>
+        function startQuiz() {
+            document.getElementById('start-page').style.display = 'none';
+            document.getElementById('quiz').classList.remove('hidden');
+        }
+
+        let currentQuestion = 1;
+
+        function showPopup(message) {
+            document.getElementById("popup-message").innerText = message;
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function hidePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function nextQuestion(answer) {
+            if (answer === 'yes') {
+                hidePopup();
+                currentQuestion++;
+                let questionText = "";
+                let answersHTML = "";
+
+                if (currentQuestion === 2) {
+                    questionText = "Will you spend the rest of your life with me, jaanu?";
+                    answersHTML = `
+                        <button onclick="nextQuestion('yes')">Yes</button>
+                        <button onclick="showPopup('ek baar me smjh nhi ata hai just say yes')">No</button>
+                    `;
+                } else if (currentQuestion === 3) {
+                    questionText = "Will you be my Valentine?";
+                    answersHTML = `
+                        <button onclick="nextQuestion('yes')">Yes</button>
+                        <button onclick="showPopup('Please forgive me jaanu')">No</button>
+                    `;
+                } else {
+                    showFinalPage();
+                    return;
+                }
+
+                document.getElementById('question').innerText = questionText;
+                document.getElementById('answers').innerHTML = answersHTML;
+            }
+        }
+
+        function showFinalPage() {
+            document.body.innerHTML = `
+                <div class="quiz-container">
+                    <h2>Yayyy! I love you!Babyy❤️</h2>
+                    <h3>Here, take this flower bouquet🌸</h3>
+                    <img src="your-bouquet-image-url-here" alt="Flower Bouquet" width="300">
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
